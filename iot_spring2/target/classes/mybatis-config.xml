@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="true" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<typeAliases>
+		<!--  <typeAlias type="com.iot.spring.vo.Emp" alias="emp" />
+		<typeAlias type="com.iot.spring.vo.UserInfo" alias="user" />
+		<typeAlias type="com.iot.spring.vo.ConnectionInfoVO" alias="ci" />
+		<typeAlias type="com.iot.spring.vo.TableVO" alias="tvo" />
+		<typeAlias type="com.iot.spring.vo.ColumnVO" alias="cvo" /> -->
+		<typeAlias type="com.iot.spring2.vo.UserInfoVO" alias="ui" />
+		
+	</typeAliases>
+
+	<mappers> 
+	<!-- 	<mapper resource="sql/user.xml" />
+		<mapper resource="sql/emp.xml" />
+		<mapper resource="sql/connection_info.xml" /> -->
+		<mapper resource="sql/user_info.xml" />
+		
+	</mappers>
+</configuration>
