@@ -19,5 +19,13 @@ public class UserInfoDAOImpl implements UserInfoDAO{
 		ss.close();
 		return ui;
 	}
+	
+	@Override
+	public int insertUserInfo(UserInfoVO ui) {
+		SqlSession ss = ssf.openSession();
+		int result = ss.insert("user_info.insertUserInfo", ui);
+		ss.close();
+		return result;
+	}
 
 }

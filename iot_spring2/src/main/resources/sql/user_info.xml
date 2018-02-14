@@ -9,13 +9,17 @@
 		where 1=1
 		<if test="uID!=null">
 			and uID=#{uID}
-		</if>	
+		</if>
 		<if test="uPwd!=null">
 			and uPwd=#{uPwd}
 		</if>
 	</select>
-
 	
+	<insert id="insertUserInfo" parameterType="ui">
+		insert into user_info(uName,uID,uPwd,uEmail,admin)
+		values(#{uName},#{uID},#{uPwd},#{uEmal},#{admin})
+	</insert>
+
 
 
 </mapper>

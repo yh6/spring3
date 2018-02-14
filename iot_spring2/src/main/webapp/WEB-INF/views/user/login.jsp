@@ -53,8 +53,8 @@
       if(loader.xmlDoc.status == 200){
          var res = JSON.parse(res);
          alert(res.msg);
-         if(res.loginOk){
-            location.href="${root}/path/db/main";
+         if(res.biz){
+            location.href="${pPath}/db/main";
          }
       }else{  
          console.log(res);

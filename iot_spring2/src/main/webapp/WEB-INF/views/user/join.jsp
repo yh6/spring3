@@ -109,16 +109,20 @@ div#winVP {
 			} else if (id == "cancelBtn") {
 				form.clear();
 			} else if (id == "backBtn") {
+				location.href="${pPath}/user/login}"
 			}
 		});
 	})
 
 	
 
-	function callback(res) {
-			console.log(res);
-		}
-
+	function callback(res){
+	   alert(res.msg);
+    if(res.biz){
+    	localtion.href="${pPath}/user/login";
+    }
+   }
+   
 
 	
 </script>
