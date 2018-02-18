@@ -1,17 +1,18 @@
 package com.iot.spring2.common.dbcon;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Repository;
 
 import com.iot.spring2.vo.ConnectionInfoVO;
 
 
 
+@Repository
 public class DBConnector {
 	
 	private BasicDataSource bds;
@@ -19,7 +20,7 @@ public class DBConnector {
 
 	
 	
-	public DBConnector(ConnectionInfoVO ci) throws Exception {
+	public void setConnectionInfo(ConnectionInfoVO ci) throws Exception {
 		bds = new BasicDataSource();
 		bds.setDriverClassName("org.mariadb.jdbc.Driver");
 		String url = "jdbc:mysql://" + ci.getCiUrl() + ":" + ci.getCiPort();

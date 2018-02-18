@@ -18,7 +18,6 @@ public class ConnectionInfoVO {
 	private String text;	
 	private Object[] items;
 	private String id;
-	
 	public int getCiNo() {
 		return ciNo;
 	}
@@ -97,8 +96,6 @@ public class ConnectionInfoVO {
 				+ ", ciDatabase=" + ciDatabase + ", ciUser=" + ciUser + ", ciPwd=" + ciPwd + ", ciEtc=" + ciEtc
 				+ ", uID=" + uID + ", text=" + text + ", items=" + Arrays.toString(items) + ", id=" + id + "]";
 	}
-	
-	
 	
 	
 	

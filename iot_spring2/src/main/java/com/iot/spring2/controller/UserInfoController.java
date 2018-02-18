@@ -2,13 +2,15 @@ package com.iot.spring2.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
+
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +27,7 @@ public class UserInfoController {
 	@Autowired
 	private UserInfoService uis;
 	
-	private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserInfoController.class);
+	private static final Logger log = LoggerFactory.getLogger(UserInfoController.class);
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public @ResponseBody Map<String,Object> login(UserInfoVO ui , HttpSession hs){
@@ -40,10 +42,26 @@ public class UserInfoController {
 	public @ResponseBody Map<String,Object> join(@RequestBody UserInfoVO ui){
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("msg", "가입실패");
-		if(uis.join(ui)==1) {
-			map.put("msg", ui.getuName()+",님 회원가입에 성공하셨습니다.");
+		map.put("biz", false);
+		int result = uis.join(ui);
+		if(result==1) {
+			map.put("msg", "회원가입 성공 ");
+			map.put("biz", true);
+		}else if(result==2) {
+			map.put("msg", "아이디 중복 확인 요청");
 		}
-		log.info("insertUI=>{}",ui);
+		return map;
+	}
+	@RequestMapping(value="/check/{uID}", method=RequestMethod.GET)
+	public @ResponseBody Map<String, Object> join2(@PathVariable String uID){
+		Map<String, Object> map = new HashMap<String, Object>();
+		log.info("insertUI=>{}",uID);
+		map.put("msg", "아이디 중복 임마~");
+		map.put("biz", false);
+		if(uis.checkUserId(uID)==0) {
+			map.put("msg", "없는 아이디");
+			map.put("biz", true);
+		}
 		return map;
 	}
 }

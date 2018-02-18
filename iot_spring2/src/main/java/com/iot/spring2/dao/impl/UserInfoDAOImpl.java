@@ -9,9 +9,10 @@ import com.iot.spring2.dao.UserInfoDAO;
 import com.iot.spring2.vo.UserInfoVO;
 
 @Repository
-public class UserInfoDAOImpl implements UserInfoDAO{
+public class UserInfoDAOImpl implements UserInfoDAO {
 	@Autowired
 	private SqlSessionFactory ssf;
+	
 	@Override
 	public UserInfoVO selectUserInfo(UserInfoVO ui) {
 		SqlSession ss = ssf.openSession();

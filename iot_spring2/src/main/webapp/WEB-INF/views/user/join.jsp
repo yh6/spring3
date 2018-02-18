@@ -49,6 +49,10 @@ div#winVP {
 			label : "아이디 : ",
 			required : true
 		}, {
+			type : "button",
+			name : "checkBtn",
+			value : "아이디 중복 체크"
+		}, {
 			type : "password",
 			name : "uPwd",
 			label : "비밀번호 : ",

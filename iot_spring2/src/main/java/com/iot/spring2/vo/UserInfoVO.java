@@ -4,18 +4,19 @@ import javax.validation.constraints.NotNull;
 
 public class UserInfoVO {
 	
-	private int uNo;
+//	private int uNo;
 	private String uName;
 	private String uID;
 	private String uPwd;
 	private String uEmail;
 	private char admin;
-	public int getuNo() {
+	
+/*	public int getuNo() {
 		return uNo;
 	}
 	public void setuNo(int uNo) {
 		this.uNo = uNo;
-	}
+	}*/
 	public String getuName() {
 		return uName;
 	}
@@ -46,10 +47,15 @@ public class UserInfoVO {
 	public void setAdmin(char admin) {
 		this.admin = admin;
 	}
-	@Override
+/*	@Override
 	public String toString() {
 		return "UserInfoVO [uNo=" + uNo + ", uName=" + uName + ", uID=" + uID + ", uPwd=" + uPwd + ", uEmail=" + uEmail
 				+ ", admin=" + admin + "]";
+	}*/
+	@Override
+	public String toString() {
+		return "UserInfoVO [uName=" + uName + ", uID=" + uID + ", uPwd=" + uPwd + ", uEmail=" + uEmail + ", admin="
+				+ admin + "]";
 	}
 	
 

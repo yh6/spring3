@@ -20,7 +20,17 @@
 		values(#{uName},#{uID},#{uPwd},#{uEmal},#{admin})
 	</insert>
 
+	<update id="updateUserInfo" parameterType="ui">
+		update from user_info
+		set
+		uName=#{uName},uID=#{uID},uPwd=#{uPwd},uEmail=#{uEmail},admin=#{admin}
+		where uNo=#{uNo}
+	</update>
 
+	<delete id="deleteUserInfo" parameterType="map">
+		delete user_info where
+		uNo=#{uNo}
+	</delete>
 
 </mapper>
   

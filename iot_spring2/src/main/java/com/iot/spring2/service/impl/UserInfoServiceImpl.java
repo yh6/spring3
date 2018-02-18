@@ -29,12 +29,18 @@ public class UserInfoServiceImpl implements UserInfoService{
 
 	@Override
 	public int join(UserInfoVO ui) {
-		UserInfoVO Ui = new UserInfoVO();
-		Ui.setuID(ui.getuID());
-		if(uidao.selectUserInfo(Ui)!=null) {
-			return uidao.insertUserInfo(Ui);
+		if(checkUserId(ui.getuID())==1) {
+			return 2;
+		}
+		return uidao.insertUserInfo(ui);
+	}
+	@Override
+	public int checkUserId(String uID) {
+		UserInfoVO ui = new UserInfoVO();
+		ui.setuID(uID);
+		if(uidao.selectUserInfo(ui)!=null){
+			return 1;
 		}
 		return 0;
 	}
-
 }

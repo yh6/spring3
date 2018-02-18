@@ -5,14 +5,14 @@
 
 <html>
 <head>
-	<title>iot2</title>
+	<title>DataBase Administrator</title>
 </head>
 <script>
 
 </script>
 <body>
 <h1>
-	iot2
+	DataBase Administrator
 </h1>
 <a href="${pPath}/user/login"><button id="goLogin" type="button">로그인</button></a>
 </body>
