@@ -35,7 +35,6 @@ div.controls {
 	height: 70px;
 	border: 1px solid #dfdfdf;
 }
-
 </style>
 <script> 
 
@@ -159,17 +158,57 @@ dhtmlxEvent(window,"load",function(){
 		{type:"input",name:"sqlTa",label:"sql",required:true,rows:10,style:"background-color:#ecf3f9;border:1px solid #39c;width:800"},
 	];
 	var sqlForm = bTabs.tabs("sql").attachForm(sqlFormObj);
+	sqlForm.attachEvent("onButtonClick", function(name){      
+	      if(name=="runBtn"){
+	         var sql = sqlForm.getItemValue("sqlTa").trim();
+	         if(sql.indexOf("select") == 0){
+	            var au = new AjaxUtil("${root}/sql/query/"+sql,null,"post");         
+	            function sqlCB(res){
+	            	if(res.errorMsg){
+	            		alert(res.errorMsg);
+	            	}else {	            			            	
+	               var cLayGrid = cLay.attachGrid();
+	               var headerStr = "";
+	               var colTypeStr = "";            
+	               if(res.list[0] != null){
+	                  for(var key in res.list[0]){                  
+	                     headerStr += key + ",";
+	                     colTypeStr += "ro,";
+	                  }                
+	               }
+	               headerStr = headerStr.substr(0, headerStr.length-1);
+	               colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
+	               cLayGrid.setColumnIds(headerStr);
+	               cLayGrid.setHeader(headerStr);
+	               cLayGrid.setColTypes(colTypeStr);
+	               cLayGrid.init();  
+	               
+	               cLayGrid.parse({data:res.list},"js");               
+	            	}  
+	            }         
+	            au.send(sqlCB); 
+	         }         
+	         else{
+	            var au = new AjaxUtil("${root}/sql/update/"+sql,null,"post"); 
+	            function updateCB(res){
+	            	if(res.result !=0){
+	            		alert("성공");
+	            		cLayGrid.datachObject();
+	            	}else {
+	            		alert("실패");
+	            	}
+	            }
+	            au.send(updateCB);
+	         }
+	         
+	         
+	      }else if(name=="cancelBtn"){         
+	         sqlForm.clear();
+	      }
+	      
+	   });
 
-	/* form.attachEvent("onKeyDown",function(inp, ev, name, value){
-		if(id=="saveBtn"){
-			if(form.validate()){
-				form.send("${root}/connection/insert", "post",addConnectionCB);
-			}
-		}else if(id=="cancelBtn"){
-			form.clear();
-		}
-	});
-	  tabbar에는 키업이벤트가 없음*/
+	 
 	cLay = bodyLayout.cells("c");
 	cTabs = cLay.attachTabbar({
 		align:"left",

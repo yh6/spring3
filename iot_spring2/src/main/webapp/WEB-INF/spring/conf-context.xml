@@ -32,5 +32,7 @@
 	<!--  <bean id="mav" class="org.springframework.web.servlet.ModelAndView">
 		<constructor-arg value="error/error"></constructor-arg>
 	</bean> -->
-	
+	<bean class="org.codehaus.jackson.map.ObjectMapper"></bean>
+   
+ 
 </beans>

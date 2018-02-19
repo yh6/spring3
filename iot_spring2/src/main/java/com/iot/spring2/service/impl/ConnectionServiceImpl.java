@@ -82,6 +82,13 @@ public class ConnectionServiceImpl implements ConnectionService {
 	public List<ConnectionInfoVO> getConnectionInfoList(String uID) {
 		return cidao.selectConnectionInfoList(uID);
 	}
+
+	@Override
+	public int useDataBase(String dbName, HttpSession hs) {
+		SqlSession ss = (SqlSession) hs.getAttribute("sqlSession");	
+		return cidao.useDataBase(dbName,ss);
+	}
+	
 	}
 
 

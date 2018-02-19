@@ -13,7 +13,6 @@ import com.iot.spring2.vo.ColumnVO;
 import com.iot.spring2.vo.ConnectionInfoVO;
 import com.iot.spring2.vo.TableVO;
 
-
 @Repository
 public class ConnectionDAOImpl implements ConnectionDAO {
 	@Autowired
@@ -69,6 +68,12 @@ public class ConnectionDAOImpl implements ConnectionDAO {
 	@Override
 	public List<ColumnVO> selectColumnList(SqlSession ss, Map<String, String> map) {
 		return ss.selectList("connection.selectColumn", map);
+	}
+
+	@Override
+	public int useDataBase(String dbName, SqlSession ss) {
+		int result = ss.update("connection.useDatabase", dbName);
+		return result;
 	}
 
 }
