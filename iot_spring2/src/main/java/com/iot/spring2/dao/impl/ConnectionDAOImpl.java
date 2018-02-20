@@ -76,4 +76,10 @@ public class ConnectionDAOImpl implements ConnectionDAO {
 		return result;
 	}
 
+	@Override
+	public List<Map<String, Object>> selectTDList(String tableName, SqlSession ss) {
+		List<Map<String, Object>> TDList = ss.selectList("connection.selectTDList", tableName);		
+		return TDList;
+	}
+
 }

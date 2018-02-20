@@ -109,7 +109,7 @@
          <version>1.2</version>
       </dependency>
    
-      <!-- Test -->
+      <!-- Test ; 단위테스트를 원할하게 사용하기 위해 추가한 라이브러리-->
       <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
@@ -162,7 +162,7 @@
       
       
    <!--  드라이버를 통해 mysql서버에 접속가능)-->
-      <!-- mariadb connector ;   -->
+      <!-- mariadb connector -->
       <dependency>
          <groupId>org.mariadb.jdbc</groupId>
          <artifactId>mariadb-java-client</artifactId>
@@ -190,7 +190,7 @@
          <version>1.6.8</version>
       </dependency>
       
-      <!-- cglib -->
+      <!-- cglib ; -->
       <dependency>
          <groupId>cglib</groupId>
          <artifactId>cglib</artifactId>

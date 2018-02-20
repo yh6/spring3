@@ -80,5 +80,10 @@
 	<update id="useDatabase" parameterType="string">
 		use ${value}
 	</update>
-
+	
+	<select id="selectTDList" parameterType="string" resultType="map" >
+		select * from ${value}
+		limit 30
+	</select>
+	
 </mapper>

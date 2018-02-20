@@ -42,6 +42,7 @@ var bodyLayout, dbTree,winF,popW;
 var aLay, bLay, cLay;
 var bTabs, bTab1, bTab2, bTab3;
 var tableInfoGrid;
+var cTabs;
 function columnListCB(res){
 	if(res.cList){
 		tableInfoGrid = bTabs.tabs("tableInfo").attachGrid();
@@ -60,7 +61,28 @@ function columnListCB(res){
 		tableInfoGrid.setColTypes(colTypeStr);
         tableInfoGrid.init();
 		tableInfoGrid.parse({data:res.cList},"js");
-		console.log(res);
+	
+	}
+	if(res.TDList) {
+		tabledataGrid = bTabs.tabs("tableData").attachGrid();
+		var columns = res.TDList[0];
+		var headerStr = "";
+		var colTypeStr = "";
+		for(var key in columns){
+			if(key=="id") continue;
+			headerStr += key + ",";
+			colTypeStr += "ro,";
+		}
+		headerStr = headerStr.substr(0, headerStr.length-1);
+		colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);
+		tabledataGrid.setColumnIds(headerStr);
+		tabledataGrid.setHeader(headerStr);
+		tabledataGrid.setColTypes(colTypeStr);
+		tabledataGrid.init();
+		tabledataGrid.parse({data:res.TDList},"js");
+		
+		
+		
 	}
 }
 function connectionListCB(res){
@@ -159,48 +181,139 @@ dhtmlxEvent(window,"load",function(){
 	];
 	var sqlForm = bTabs.tabs("sql").attachForm(sqlFormObj);
 	sqlForm.attachEvent("onButtonClick", function(name){      
-	      if(name=="runBtn"){
-	         var sql = sqlForm.getItemValue("sqlTa").trim();
-	         if(sql.indexOf("select") == 0){
-	            var au = new AjaxUtil("${root}/sql/query/"+sql,null,"post");         
-	            function sqlCB(res){
-	            	if(res.errorMsg){
-	            		alert(res.errorMsg);
-	            	}else {	            			            	
-	               var cLayGrid = cLay.attachGrid();
-	               var headerStr = "";
-	               var colTypeStr = "";            
-	               if(res.list[0] != null){
-	                  for(var key in res.list[0]){                  
-	                     headerStr += key + ",";
-	                     colTypeStr += "ro,";
-	                  }                
-	               }
-	               headerStr = headerStr.substr(0, headerStr.length-1);
-	               colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
-	               cLayGrid.setColumnIds(headerStr);
-	               cLayGrid.setHeader(headerStr);
-	               cLayGrid.setColTypes(colTypeStr);
-	               cLayGrid.init();  
-	               
-	               cLayGrid.parse({data:res.list},"js");               
-	            	}  
-	            }         
-	            au.send(sqlCB); 
-	         }         
-	         else{
-	            var au = new AjaxUtil("${root}/sql/update/"+sql,null,"post"); 
-	            function updateCB(res){
-	            	if(res.result !=0){
-	            		alert("성공");
-	            		cLayGrid.datachObject();
-	            	}else {
-	            		alert("실패");
-	            	}
-	            }
-	            au.send(updateCB);
-	         }
+	      if(name=="runBtn"){	    
+	         var sql = sqlForm.getItemValue("sqlTa").trim();			
+			var sqlLength = sql.length;
+			var semiColNum = sql.lastIndexOf(";");				
+			if(semiColNum != -1 && sqlLength == (semiColNum+1)){
+				sql = sql.substr(0, (sqlLength-1));		
+			}
 	         
+	         var sqlArr = [];
+	         sqlArr = sql.split(";");
+	         
+	     	 if(sqlArr.length==1){
+	     	      if(sql.indexOf("select") == 0){
+	  	            var au = new AjaxUtil("${root}/sql/query/"+sql,null,"post");         
+	  	            function sqlCB(res){
+	  	            	if(res.errorMsg){
+	  	            		alert(res.errorMsg);
+	  	            	}else {	            			            	
+	  	               var cLayGrid = cLay.attachGrid();
+	  	               var headerStr = "";
+	  	               var colTypeStr = "";            
+	  	               if(res.list[0] != null){
+	  	                  for(var key in res.list[0]){                  
+	  	                     headerStr += key + ",";
+	  	                     colTypeStr += "ro,";
+	  	                  }                
+	  	               }
+	  	               headerStr = headerStr.substr(0, headerStr.length-1);
+	  	               colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
+	  	               cLayGrid.setColumnIds(headerStr);
+	  	               cLayGrid.setHeader(headerStr);
+	  	               cLayGrid.setColTypes(colTypeStr);
+	  	               cLayGrid.init();  
+	  	               
+	  	               cLayGrid.parse({data:res.list},"js");  
+	  	               
+	  	    		 var dRows = 0;
+	  	 			 var aRows = 0;
+	  	     			if(res.dRows){
+	  	     				dRows = res.dRows;
+	  	     			}
+	  	     			if(res.result){
+	  	     				aRows = res.result;
+	  	     			
+	  	     			}
+	  	     		$("div.text").append("<br>" + "Affected rows: " + aRows + "    찾은 행: " + dRows);
+	  	     	}
+	  	            	}  
+	  	            		                    
+	  	            au.send(sqlCB); 
+	  	  
+	  	            
+	  	         }else {
+	  	            var au = new AjaxUtil("${root}/sql/update/"+sql,null,"post"); 
+	  	            function updateCB(res){
+	  	            	if(res.result!=0){
+	  	            		var dRows = 0;
+	  	   	 			 	var aRows = 0;
+	  	   	 			if(res.dRows){
+	  	     				dRows = res.dRows;
+	  	     			}
+	  	     			if(res.result){
+	  	     				aRows = res.result;	     			
+	  	     			}
+	  	     		$("div.text").append("<br>" + "Affected rows: " + aRows + "    찾은 행: " + dRows);	         
+	  	            		cLayGrid.datachObject();
+	  	            	}else {
+	  	            		alert("실패");
+	  	            	}
+	  	            }
+	  	           
+	  	            au.send(updateCB);
+	  	         }
+	     	      
+	     		 
+	     	 }
+	     	 else{
+	     		$.ajax({ 
+	     			url      : "${root}/sql/multi",  
+	    	        type     : "POST",
+	    	        data     : sql,
+	    	        dataType : "json",
+	    	        beforeSend: function(xhr) {	    		    	
+	    		    	xhr.setRequestHeader("Accept", "application/json");
+	    		        xhr.setRequestHeader("Content-Type", "application/json");
+	    		    },
+	    	        success : function(res) {	    	        	
+	    	        	cTabs = cLay.attachTabbar();	
+	    	        	
+	    	        	var dRows = 0;
+  	   	 			 	var aRows = 0;
+  	   	 				    	        	
+				   		console.log(res);
+				   		for(var key in res){
+				   			if(key!="dRows" && key!="result"){
+				   				cTabs.addTab(key, "Result", null, null, true, true);
+				   				var cTGrid = cTabs.tabs(key).attachGrid();
+					   			var headerStr = "";
+								var colTypeStr = "";
+								for(var listCol in (res[key])[0]){						
+									headerStr += listCol + ",";
+									colTypeStr += "ro,";
+								}
+								headerStr = headerStr.substr(0, headerStr.length-1);
+								colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);				
+								cTGrid.setColumnIds(headerStr);
+								cTGrid.setHeader(headerStr);
+								cTGrid.setColTypes(colTypeStr);
+								cTGrid.init();  					
+								cTGrid.parse({data:res[key]},"js"); 
+							}
+				   			else{
+				   				if(res.dRows){
+			  	     				dRows = res.dRows;
+			  	     			}
+			  	     			if(res.result){
+			  	     				aRows = res.result;	     			
+			  	     			}
+				   				
+				   				
+				   			}
+				   			
+				   		}
+				   		$("div.text").append("<br>" + "Affected rows: " + aRows + "    찾은 행: " + dRows);	
+	    	        	
+	    	        },
+	    	        error : function(xhr, status, e) {
+	    			    	alert("에러 : "+e);
+	    	        }
+	     		});
+	     		
+	     	 }
+	     	 
 	         
 	      }else if(name=="cancelBtn"){         
 	         sqlForm.clear();
@@ -219,7 +332,7 @@ dhtmlxEvent(window,"load",function(){
 	});
 
 	winF = new dhtmlXWindows();
-	popW = winF.createWindow("win1",20,30,320,300);
+	popW = winF.createWindow("win1",20,30,350,450);
 	//popW.hide(); 
 	popW.setText("Add Connection Info"); 
 	var formObj = [

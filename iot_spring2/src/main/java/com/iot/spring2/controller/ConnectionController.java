@@ -81,7 +81,9 @@ public class ConnectionController {
 		pMap.put("dbName", dbName);
 		pMap.put("tableName", tableName);
 		List<ColumnVO> cList = cis.getColumnList(hs, pMap);
+		List<Map<String, Object>> TDList = cis.getTDList(tableName, hs);
 		map.put("cList", cList);
+		map.put("TDList", TDList);
 		return map;
 	}
 

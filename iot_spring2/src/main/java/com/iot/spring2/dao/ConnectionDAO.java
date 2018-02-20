@@ -14,16 +14,11 @@ public interface ConnectionDAO {
 	public List<ConnectionInfoVO> selectConnectionInfoList(String uID);
 
 	ConnectionInfoVO selectConnectionInfo(int ciNo);
-
 	List<ConnectionInfoVO> selectConnectionInfoList(ConnectionInfoVO ci);
-
 	int insertConnectionInfo(ConnectionInfoVO ci);
-
 	List<Map<String, Object>> selectDatabaseList(SqlSession ss) throws Exception;
-
 	List<TableVO> selectTableList(SqlSession ss, String dbName);
-
 	List<ColumnVO> selectColumnList(SqlSession ss, Map<String, String> map);
-
 	int useDataBase(String dbName, SqlSession ss);
+	public List<Map<String, Object>> selectTDList(String tableName, SqlSession ss);
 }
