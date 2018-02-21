@@ -33,7 +33,7 @@ public class UserInfoController {
 	public @ResponseBody Map<String,Object> login(UserInfoVO ui , HttpSession hs){
 		Map<String, Object> map = new HashMap<String,Object>();
 		if(uis.login(map, ui)) {
-			hs.setAttribute("user", map.get("user"));
+			hs.setAttribute("user", map.get("user")); //세션에 ui담김(vo에 다녀온 vo)
 		}
 		return map;
 	}
@@ -56,7 +56,7 @@ public class UserInfoController {
 	public @ResponseBody Map<String, Object> join2(@PathVariable String uID){
 		Map<String, Object> map = new HashMap<String, Object>();
 		log.info("insertUI=>{}",uID);
-		map.put("msg", "아이디 중복 임마~");
+		map.put("msg", "아이디 중복 ");
 		map.put("biz", false);
 		if(uis.checkUserId(uID)==0) {
 			map.put("msg", "없는 아이디");

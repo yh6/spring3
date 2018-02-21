@@ -14,9 +14,9 @@ public class UserInfoDAOImpl implements UserInfoDAO {
 	private SqlSessionFactory ssf;
 	
 	@Override
-	public UserInfoVO selectUserInfo(UserInfoVO ui) {
+	public UserInfoVO selectUserInfo(UserInfoVO ui) { //ui는 아디비번 2개잇는 ui
 		SqlSession ss = ssf.openSession();
-		ui = ss.selectOne("user_info.selectUserInfo",ui);	
+		ui = ss.selectOne("user_info.selectUserInfo",ui);	//ui 다딤긴ui
 		ss.close();
 		return ui;
 	}

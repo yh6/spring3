@@ -13,7 +13,7 @@ public interface ConnectionService {
 	public List<ConnectionInfoVO> getConnectionInfoList(String uID);
 	ConnectionInfoVO getConnectionInfo(ConnectionInfoVO ci);
 	List<ConnectionInfoVO> getConnectionInfoList(ConnectionInfoVO ci);
-	void insertConnectionInfo(Map<String, Object> rMap, ConnectionInfoVO ci);
+	void insertConnectionInfo(Map<String, Object> rMap, ConnectionInfoVO ci, HttpSession hs);
 	List<TableVO> getTableList(HttpSession hs, String dbNameS);
 	List<Map<String, Object>> getDatabaseList(HttpSession hs, int ciNo) throws Exception;
 	List<ColumnVO> getColumnList(HttpSession hs, Map<String, String> map);

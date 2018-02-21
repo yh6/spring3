@@ -44,6 +44,7 @@ var aLay, bLay, cLay;
 var bTabs, bTab1, bTab2, bTab3;
 var tableInfoGrid;
 var cTabs;
+
 function columnListCB(res){
 	if(res.cList){
 		tableInfoGrid = bTabs.tabs("tableInfo").attachGrid();
@@ -123,6 +124,8 @@ function tableListCB(res){
 	dbTree.openItem(parentId);
 }
 function addConnectionCB(res){
+	alert(res.msg);
+	popW.hide();
 	console.log(res);
 }
 function dbListCB(res){
@@ -142,6 +145,7 @@ function dbListCB(res){
 dhtmlxEvent(window,"load",function(){
 	bodyLayout = new dhtmlXLayoutObject(document.body,"3L");
 	bodyLayout.attachFooter("footDiv");
+	
 	aLay = bodyLayout.cells("a");
 	aLay.setWidth(300);
 	aLay.setText("Connection Info List");
@@ -218,7 +222,7 @@ dhtmlxEvent(window,"load",function(){
 	  	                	  }else{	  	                	   	                	  
 	  	                         headerStr += key + ",";
 	  	                         colTypeStr += "ro,";
-	  	                         headerStyle.push("color:;");
+	  	                         headerStyle.push("color : grren;");
 	  	                	  }
 	  	                  }                
 	  	               }
@@ -226,7 +230,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               headerStr = headerStr.substr(0, headerStr.length-1);
 	  	              	 colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
 	  	            	 cTGrid.setColumnIds(headerStr);
-	  	          		 cTGrid.setHeader(headerStr);
+	  	          		 cTGrid.setHeader(headerStr,null,headerStyle);
 	  	        		 cTGrid.setColTypes(colTypeStr);
 	  	      			 cTGrid.init();  
 	  	               
@@ -296,15 +300,17 @@ dhtmlxEvent(window,"load",function(){
 				   				var cTGrid = cTabs.tabs(key).attachGrid();
 					   			var headerStr = "";
 								var colTypeStr = "";
+								var headerStyle =[];
 								for(var listCol in (res[key])[0]){
 									if(listCol == "tName") continue;
 									headerStr += listCol + ",";
 									colTypeStr += "ro,";
+									headerStyle.push("color : grren;");
 								}
 								headerStr = headerStr.substr(0, headerStr.length-1);
 								colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);				
 								cTGrid.setColumnIds(headerStr);
-								cTGrid.setHeader(headerStr);
+								cTGrid.setHeader(headerStr,null,headerStyle);
 								cTGrid.setColTypes(colTypeStr);
 								cTGrid.init();  					
 								cTGrid.parse({data:res[key]},"js"); 
@@ -369,7 +375,7 @@ dhtmlxEvent(window,"load",function(){
 	  	                	  }else{	  	                	   	                	  
 	  	                         headerStr += key + ",";
 	  	                         colTypeStr += "ro,";
-	  	                         headerStyle.push("color:skyblue;");
+	  	                         headerStyle.push("color : grren;");
 	  	                	  }
 	  	                  }                
 	  	               }
@@ -377,7 +383,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               headerStr = headerStr.substr(0, headerStr.length-1);
 	  	              	 colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
 	  	            	 cTGrid.setColumnIds(headerStr);
-	  	          		 cTGrid.setHeader(headerStr);
+	  	          		 cTGrid.setHeader(headerStr,null,headerStyle);
 	  	        		 cTGrid.setColTypes(colTypeStr);
 	  	      			 cTGrid.init();  
 	  	               
@@ -448,15 +454,17 @@ dhtmlxEvent(window,"load",function(){
 				   				var cTGrid = cTabs.tabs(key).attachGrid();
 					   			var headerStr = "";
 								var colTypeStr = "";
+								var headerStyle =[];
 								for(var listCol in (res[key])[0]){
 									if(listCol == "tName") continue;
 									headerStr += listCol + ",";
 									colTypeStr += "ro,";
+									headerStyle.push("color : grren;");
 								}
 								headerStr = headerStr.substr(0, headerStr.length-1);
 								colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);				
 								cTGrid.setColumnIds(headerStr);
-								cTGrid.setHeader(headerStr);
+								cTGrid.setHeader(headerStr,null,headerStyle);
 								cTGrid.setColTypes(colTypeStr);
 								cTGrid.init();  					
 								cTGrid.parse({data:res[key]},"js"); 
@@ -483,11 +491,7 @@ dhtmlxEvent(window,"load",function(){
 	    	        }
 	     		});
 	     		
-	     	 }
-	     	 
-	         
-	     
-		   
+	     	 }		   
 	   }
 	});
 

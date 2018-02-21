@@ -17,6 +17,7 @@ import com.iot.spring2.service.ConnectionService;
 import com.iot.spring2.vo.ColumnVO;
 import com.iot.spring2.vo.ConnectionInfoVO;
 import com.iot.spring2.vo.TableVO;
+import com.iot.spring2.vo.UserInfoVO;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -40,8 +41,12 @@ public class ConnectionServiceImpl implements ConnectionService {
 	}
 
 	@Override
-	public void insertConnectionInfo(Map<String, Object> rMap, ConnectionInfoVO ci) {
-		int result = cidao.insertConnectionInfo(ci);
+	public void insertConnectionInfo(Map<String, Object> rMap, ConnectionInfoVO ci, HttpSession hs) {
+		if(hs.getAttribute("user") !=null) {
+			UserInfoVO user = (UserInfoVO) hs.getAttribute("user");
+			ci.setuID(user.getuID());
+		}
+		int result = cidao.insertConnectionInfo(ci);		
 		rMap.put("msg", "실패");
 		if (result ==1) {
 			rMap.put("msg", "성공");

@@ -32,9 +32,10 @@ public class ConnectionController {
 	private ConnectionService cis;
 
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public @ResponseBody Map<String, Object> insertConnectionInfo(@Valid ConnectionInfoVO ci, Map<String, Object> map) {
+	public @ResponseBody Map<String, Object> insertConnectionInfo(@Valid ConnectionInfoVO ci, Map<String, Object> map,HttpSession hs) {
 		log.info("ci=>{}", ci);
-		cis.insertConnectionInfo(map, ci);
+		
+		cis.insertConnectionInfo(map, ci,hs);
 		return map;
 	}
 
