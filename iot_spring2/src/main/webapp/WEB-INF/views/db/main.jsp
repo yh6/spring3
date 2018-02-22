@@ -123,7 +123,8 @@ function tableListCB(res){
 	}
 	dbTree.openItem(parentId);
 }
-function addConnectionCB(res){
+function addConnectionCB(xhr,res){
+	res = JSON.parse(res);
 	alert(res.msg);
 	popW.hide();
 	console.log(res);
@@ -145,7 +146,7 @@ function dbListCB(res){
 dhtmlxEvent(window,"load",function(){
 	bodyLayout = new dhtmlXLayoutObject(document.body,"3L");
 	bodyLayout.attachFooter("footDiv");
-	
+
 	aLay = bodyLayout.cells("a");
 	aLay.setWidth(300);
 	aLay.setText("Connection Info List");
@@ -214,7 +215,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               //var cLayGrid = cLay.attachGrid();
 	  	               var headerStr = "";
 	  	               var colTypeStr = ""; 
-	  	               var headerStyle =[];
+	  	              
 	  	               if(res.list[0] != null){
 	  	                  for(var key in res.list[0]){ 
 	  	                	  if(key == "tName"){
@@ -222,7 +223,7 @@ dhtmlxEvent(window,"load",function(){
 	  	                	  }else{	  	                	   	                	  
 	  	                         headerStr += key + ",";
 	  	                         colTypeStr += "ro,";
-	  	                         headerStyle.push("color : grren;");
+	  	                         
 	  	                	  }
 	  	                  }                
 	  	               }
@@ -230,7 +231,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               headerStr = headerStr.substr(0, headerStr.length-1);
 	  	              	 colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
 	  	            	 cTGrid.setColumnIds(headerStr);
-	  	          		 cTGrid.setHeader(headerStr,null,headerStyle);
+	  	          		 cTGrid.setHeader(headerStr);
 	  	        		 cTGrid.setColTypes(colTypeStr);
 	  	      			 cTGrid.init();  
 	  	               
@@ -255,6 +256,7 @@ dhtmlxEvent(window,"load",function(){
 	     	      else {
 	  	            var au = new AjaxUtil("${root}/sql/update/"+sql,null,"post"); 
 	  	            function updateCB(res){
+	  	            	
 	  	            	if(res.result!=0){
 	  	            		var dRows = 0;
 	  	   	 			 	var aRows = 0;
@@ -270,9 +272,9 @@ dhtmlxEvent(window,"load",function(){
 	  	            		cLayGrid.detachObject();
 	  	            	}else {
 	  	            		alert("실패");
-	  	            	}
-	  	            }
-	  	           
+	  	            	 }
+	  	              }
+	  	            
 	  	            au.send(updateCB);
 	  	         }
 	     	      	     		 
@@ -300,17 +302,17 @@ dhtmlxEvent(window,"load",function(){
 				   				var cTGrid = cTabs.tabs(key).attachGrid();
 					   			var headerStr = "";
 								var colTypeStr = "";
-								var headerStyle =[];
+							
 								for(var listCol in (res[key])[0]){
 									if(listCol == "tName") continue;
 									headerStr += listCol + ",";
 									colTypeStr += "ro,";
-									headerStyle.push("color : grren;");
+									
 								}
 								headerStr = headerStr.substr(0, headerStr.length-1);
 								colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);				
 								cTGrid.setColumnIds(headerStr);
-								cTGrid.setHeader(headerStr,null,headerStyle);
+								cTGrid.setHeader(headerStr);
 								cTGrid.setColTypes(colTypeStr);
 								cTGrid.init();  					
 								cTGrid.parse({data:res[key]},"js"); 
@@ -367,7 +369,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               //var cLayGrid = cLay.attachGrid();
 	  	               var headerStr = "";
 	  	               var colTypeStr = ""; 
-	  	               var headerStyle =[];
+	  	              
 	  	               if(res.list[0] != null){
 	  	                  for(var key in res.list[0]){ 
 	  	                	  if(key == "tName"){
@@ -375,7 +377,7 @@ dhtmlxEvent(window,"load",function(){
 	  	                	  }else{	  	                	   	                	  
 	  	                         headerStr += key + ",";
 	  	                         colTypeStr += "ro,";
-	  	                         headerStyle.push("color : grren;");
+	  	                      
 	  	                	  }
 	  	                  }                
 	  	               }
@@ -383,7 +385,7 @@ dhtmlxEvent(window,"load",function(){
 	  	               headerStr = headerStr.substr(0, headerStr.length-1);
 	  	              	 colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);            
 	  	            	 cTGrid.setColumnIds(headerStr);
-	  	          		 cTGrid.setHeader(headerStr,null,headerStyle);
+	  	          		 cTGrid.setHeader(headerStr);
 	  	        		 cTGrid.setColTypes(colTypeStr);
 	  	      			 cTGrid.init();  
 	  	               
@@ -409,6 +411,8 @@ dhtmlxEvent(window,"load",function(){
 	     	      else {
 	  	            var au = new AjaxUtil("${root}/sql/update/"+sql,null,"post"); 
 	  	            function updateCB(res){
+	  	            	if(res.errorMsg){
+	  	            		alert(res.errorMsg);
 	  	            	if(res.result!=0){
 	  	            		var dRows = 0;
 	  	   	 			 	var aRows = 0;
@@ -424,9 +428,9 @@ dhtmlxEvent(window,"load",function(){
 	  	            		cLayGrid.detachObject();
 	  	            	}else {
 	  	            		alert("실패");
-	  	            	}
+	  	            	 }
+	  	              }
 	  	            }
-	  	           
 	  	            au.send(updateCB);
 	  	         }
 	     	      	     		 
@@ -454,17 +458,17 @@ dhtmlxEvent(window,"load",function(){
 				   				var cTGrid = cTabs.tabs(key).attachGrid();
 					   			var headerStr = "";
 								var colTypeStr = "";
-								var headerStyle =[];
+							
 								for(var listCol in (res[key])[0]){
-									if(listCol == "tName") continue;
+									if(listCol == "tName") continue;  //tName 빼고 컬럼추가
 									headerStr += listCol + ",";
 									colTypeStr += "ro,";
-									headerStyle.push("color : grren;");
+									
 								}
 								headerStr = headerStr.substr(0, headerStr.length-1);
 								colTypeStr = colTypeStr.substr(0, colTypeStr.length-1);				
 								cTGrid.setColumnIds(headerStr);
-								cTGrid.setHeader(headerStr,null,headerStyle);
+								cTGrid.setHeader(headerStr);
 								cTGrid.setColTypes(colTypeStr);
 								cTGrid.init();  					
 								cTGrid.parse({data:res[key]},"js"); 
@@ -502,7 +506,7 @@ dhtmlxEvent(window,"load",function(){
 	cTabs = cLay.attachTabbar({
 		align:"left",
 		tabs:[
-			{id:"tableInfo", text:"Table Info"},
+			{id:"Result", text:"Result"},
 	
 		]
 	});
@@ -552,5 +556,6 @@ function printLog(msg){
 	<div id="footDiv" class="my_ftr">
 		<div class="text">log</div>
 	</div>
+
 </body>
 </html>

@@ -22,7 +22,7 @@ div#winVP {
 	$(document).ready(function() {
 		winF = new dhtmlXWindows();
 		winF.attachViewportTo("winVP");
-		popW = winF.createWindow("win1", 20, 30, 380, 500);
+		popW = winF.createWindow("win1", 20, 30, 380, 550);
 		//popW.hide(); 
 		popW.button("close").hide();
 		popW.button("minmax").hide();
@@ -102,7 +102,7 @@ div#winVP {
 
 			]
 		} ];
-		var form = popW.attachForm(formObj, true);
+var form = popW.attachForm(formObj, true);
 		
 		form.attachEvent("onButtonClick", function(id) {
 			if (id == "joinBtn") {
@@ -117,9 +117,7 @@ div#winVP {
 			}
 		});
 	})
-
 	
-
 	function callback(res){
 	   alert(res.msg);
     if(res.biz){

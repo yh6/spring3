@@ -17,7 +17,7 @@
 	
 	<insert id="insertUserInfo" parameterType="ui">
 		insert into user_info(uName,uID,uPwd,uEmail,admin)
-		values(#{uName},#{uID},#{uPwd},#{uEmal},#{admin})
+		values(#{uName},#{uID},#{uPwd},#{uEmail},#{admin})
 	</insert>
 
 	<update id="updateUserInfo" parameterType="ui">
